@@ -1,0 +1,90 @@
+<!-- Button trigger modal -->
+<div class="text-center">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Add Task
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add New Task</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form #addTask="ngForm" (ngSubmit)="add()">
+                    <div class="mb-3">
+                        <label class="form-label">Title</label>
+                        <input type="text" class="form-control" name="title" [(ngModel)]="task.title" #title="ngModel" required>
+                        <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert alert-danger">
+                            <div *ngIf="title.errors?.['required']">
+                                Title is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Description</label>
+                        <input type="text" class="form-control" name="description" [(ngModel)]="task.description" #description="ngModel" required>
+                        <div *ngIf="description.invalid && (description.dirty || description.touched)" class="alert alert-danger">
+                            <div *ngIf="description.errors?.['required']">
+                                Description is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <select class="form-select" name="status" [(ngModel)]="task.status">
+                            <option value="todo">A faire </option>
+                            <option value="done">Fait</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Date</label>
+                        <input type="date" class="form-control" name="date" [(ngModel)]="task.date" #date="ngModel" required>
+                        <div *ngIf="date.invalid && (date.dirty || date.touched)" class="alert alert-danger">
+                            <div *ngIf="date.errors?.['required']">
+                                Date is required
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" [disabled]="addTask.invalid">Add</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Task Table -->
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th *ngIf="grade=='admin'">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let us of tasks; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ us.title }}</td>
+            <td>{{ us.description }}</td>
+            <td><input type="checkbox" [checked]="us.status === 'done'" disabled></td>
+
+            <td>{{ us.date }}</td>
+          
+            <td *ngIf="grade=='admin'"><button class="btn btn-danger" (click)="delete(i)">Delete</button></td>
+        </tr>
+    </tbody>
+</table>

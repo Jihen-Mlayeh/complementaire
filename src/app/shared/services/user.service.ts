@@ -35,10 +35,14 @@ users:User[]=[]
     return this.users[index] 
    }
    authUser(email:string,password:string){
+
     this.users=this.getUsers();
-    let user=this.users.find(user=>user.email==email && user.password==password)
+    //let user=this.users.find(user=>user.email==email && user.password==password)
+    let index=this.users.findIndex(user=>user.email==email && user.password==password)
+    let user=this.users[index]
     if(user){
-      return true 
+      localStorage.setItem("currentUser",JSON.stringify(index));
+      return user 
     }
     return null
 

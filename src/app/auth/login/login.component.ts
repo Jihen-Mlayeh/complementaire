@@ -20,6 +20,7 @@ export class LoginComponent {
     let user=this.userService.authUser(this.user.email,this.user.password)
     if(user){
       console.log("login success")
+      window.location.href="../admin"
     }
     else{
       console.log("login failed")

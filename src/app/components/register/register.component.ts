@@ -13,11 +13,13 @@ import { UserService } from '../../shared/services/user.service';
 export class RegisterComponent {
 user={} as User;
 constructor(private userService:UserService){
+  this.user.role="user";
 
 
 }
 register(){
   console.log(this.user);
   this.userService.addUser(this.user)
+  this.userService.getUsers()
 }
 }
